@@ -178,6 +178,10 @@ typedef void (^FICImageRequestCompletionBlock)(UIImage *sourceImage);
  */
 - (void)deleteImageForEntity:(id <FICEntity>)entity withFormatName:(NSString *)formatName;
 
+#ifdef DEBUG
+- (void)debugDump;
+#endif
+
 ///-------------------------------
 /// @name Canceling Image Requests
 ///-------------------------------

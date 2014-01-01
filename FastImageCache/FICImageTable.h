@@ -163,4 +163,8 @@ extern NSString *const FICImageTableScreenScaleKey;
  */
 - (void)reset;
 
+#ifdef DEBUG
+- (void)debugDump;
+#endif
+
 @end

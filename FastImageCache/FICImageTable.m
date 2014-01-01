@@ -636,6 +636,16 @@ static void _FICReleaseImageData(void *info, const void *data, size_t size) {
     return entryData;
 }
 
+#ifdef DEBUG
+- (void)debugDump {
+    NSLog(@"FICImageTable: %@ entryCount(%d) inUseCount(%d)", _imageFormat.name, _entryCount, _inUseEntries.count);
+    for (id obj in _inUseEntries.allObjects) {
+        uint count = [_inUseEntries countForObject:obj];
+        NSLog(@"\t%@ - %d", obj, count);
+    }
+}
+#endif
+
 - (void)_entryWasAccessedWithEntityUUID:(NSString *)entityUUID {
     // Update MRU array
     NSInteger index = [_MRUEntries indexOfObject:entityUUID];

@@ -56,6 +56,15 @@ static FICImageCache *__imageCache = nil;
 
 #pragma mark - Object Lifecycle
 
+#ifdef DEBUG
+- (void)debugDump {
+    NSLog(@"\n");
+    for (FICImageTable *table in _imageTables.allValues) {
+        [table debugDump];
+    }
+}
+#endif
+
 + (instancetype)sharedImageCache {
     if (__imageCache == nil) {
         static dispatch_once_t onceToken;
