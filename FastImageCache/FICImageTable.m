@@ -315,16 +315,18 @@ static NSString *const FICImageTableFormatKey = @"format";
                 
                 CGContextRef context = CGBitmapContextCreate([entryData bytes], pixelSize.width, pixelSize.height, bitsPerComponent, _imageRowLength, colorSpace, bitmapInfo);
                 
-                CGContextTranslateCTM(context, 0, pixelSize.height);
-                CGContextScaleCTM(context, _screenScale, -_screenScale);
-                
-                @synchronized(indexNumber) {
-                    // Call drawing block to allow client to draw into the context
-                    imageDrawingBlock(context, [_imageFormat imageSize]);
-                    CGContextRelease(context);
-                
-                    // Write the data back to the filesystem
-                    [entryData flush];
+                if (context) {
+                    CGContextTranslateCTM(context, 0, pixelSize.height);
+                    CGContextScaleCTM(context, _screenScale, -_screenScale);
+                    
+                    @synchronized(indexNumber) {
+                        // Call drawing block to allow client to draw into the context
+                        imageDrawingBlock(context, [_imageFormat imageSize]);
+                        CGContextRelease(context);
+                        
+                        // Write the data back to the filesystem
+                        [entryData flush];
+                    }
                 }
             } else {
                 [_lock unlock];
